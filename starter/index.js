@@ -10,23 +10,12 @@ const questions = [
         type: 'Input',
         message: 'what is your GitHub repo name?',
         name: 'repoName',
-
-
     },
     //Description
     {
         type: 'Input',
         message: 'what is your GitHub repo description?',
         name: 'desc',
-
-
-    },
-    //Table of contents
-    {
-        type: 'Input',
-        message: 'Table of contents?',
-        name: 'TOC',
-
     },
     //Installation
     {
@@ -68,17 +57,28 @@ const questions = [
 
 // function to write README file
 function writeToFile(fileName, data) {
-    fs.writeFile('/README2.md', questions, err => {
-        if (err) {
-            console.error(err);
-        }
-        // file written successfully
-    });
+
+    fs.writeFile(fileName, data, function(err){
+console.log(fileName)
+console.log(data)
+if (err){
+    return console.log(err)
+ } else {
+    console.log('file correct!')
+ }
+
+});
 }
 
 // function to initialize program
 function init() {
-
+    inquirer.prompt(questions)
+        .then(data => {
+            writeToFile("ReadMe2.md", generateMarkdown(data));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
 
 // function call to initialize program
